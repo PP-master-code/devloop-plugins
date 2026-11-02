@@ -110,6 +110,17 @@ class PreWrite(GuardCase):
         self.assertAllowed(self.pre("Edit", file_path=str(self.root / "tests/acceptance/test_m1.py"),
                                     old_string="True", new_string="1"))
 
+    def test_done_suite_protects_only_finished_milestones(self):
+        (self.root / ".claude" / "milestones.json").write_text(json.dumps({"milestones": [
+            {"id": "M1.1", "status": "done"}, {"id": "M1.2", "status": "in_progress"}]}))
+        (self.root / ".claude" / "devloop-guard.json").write_text(json.dumps({"done_suite": "tools/checks/{id}.gd"}))
+        self.assertBlocked(self.pre("Write", file_path=str(self.root / "tools/checks/m1_1.gd"), content="x"))
+        self.assertBlocked(self.bash_cmd("rm tools/checks/m1_1.gd"))
+        self.assertAllowed(self.pre("Write", file_path=str(self.root / "tools/checks/m1_2.gd"), content="x"))
+
+    def bash_cmd(self, command: str):
+        return self.pre("Bash", command=command)
+
     def test_broken_config_keeps_defaults(self):
         (self.root / ".claude" / "devloop-guard.json").write_text("{not json")
         self.assertBlocked(self.pre("Write", file_path=str(self.root / "STOP"), content="x"))

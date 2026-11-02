@@ -1,6 +1,6 @@
 {
   "name": "devloop-hub",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Work on dev_loop hub milestones from Claude Code: hub connection, /hub-* commands and guard hooks for frozen tests, loop files and handoffs.",
   "author": {"name": "PP-master-code", "url": "https://github.com/PP-master-code"},
   "homepage": "https://github.com/PP-master-code/devloop-plugins",
