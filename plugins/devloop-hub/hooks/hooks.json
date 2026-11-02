@@ -1,0 +1,21 @@
+{
+  "description": "Guard rails for dev_loop projects: frozen files, skip markers, milestones.json, handoff before stop",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
+        "hooks": [{"type": "command", "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" pre", "timeout": 15}]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [{"type": "command", "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" session", "timeout": 15}]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [{"type": "command", "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\" stop", "timeout": 15}]
+      }
+    ]
+  }
+}
