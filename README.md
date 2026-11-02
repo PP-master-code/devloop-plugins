@@ -41,6 +41,10 @@ A project can extend the guard in `.claude/devloop-guard.json`:
 {"protect": ["tests/*", "tests/**"], "allow": ["tests/acceptance/README.md"]}
 ```
 
+Projects where each milestone writes its own check suite (e.g. `tools/checks/m3.gd`) protect only the suites of
+finished milestones: `{"done_suite": "tools/checks/{id}.gd"}` (`{id}` = milestone id in lower case, dots as
+underscores, as `FrozenSuitePath` in the loop). The current milestone's suite stays writable.
+
 `DEVLOOP_UNLOCK=1` in the environment switches the guard and the stop reminder off for that session (for the
 project owner planning milestones). The guard is a guard rail, not security: the hub checks every submit itself.
 

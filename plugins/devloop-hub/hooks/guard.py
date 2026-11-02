@@ -11,7 +11,9 @@ Usage (from hooks.json): guard.py pre | session | stop, with the hook's JSON on 
 - stop:    Stop. On a work branch: blocks once when files changed after the handoff was last written.
 
 Active only in dev_loop projects (repo root has .claude/milestones.json). DEVLOOP_UNLOCK=1 turns pre and stop off.
-Project overrides in .claude/devloop-guard.json: {"protect": [globs], "allow": [globs]}.
+Project overrides in .claude/devloop-guard.json: {"protect": [globs], "allow": [globs], "done_suite": pattern}.
+done_suite (e.g. "tools/checks/{id}.gd", like FrozenSuitePath in loop-config.psd1; {id} = id in lower case, dots
+as underscores) protects the suites of milestones with status done, so the current milestone can still write its own.
 Only the standard library; must run on Linux, macOS and Windows (Git Bash).
 """
 from __future__ import annotations
@@ -73,6 +75,10 @@ def load_rules(root: Path) -> tuple[list[str], list[str]]:
             data = json.loads(cfg.read_text(encoding="utf-8"))
             protect += [str(g) for g in data.get("protect", [])]
             allow += [str(g) for g in data.get("allow", [])]
+            pattern = data.get("done_suite")
+            if isinstance(pattern, str) and "{id}" in pattern:
+                protect += [pattern.replace("{id}", suite_id(m.get("id", ""))) for m in milestones(root)
+                            if m.get("status") == "done" and m.get("id")]
         except (OSError, ValueError):
             pass  # a broken override never unlocks anything
     return protect, allow
@@ -224,12 +230,20 @@ def cmd_pre(event: dict) -> int:
 
 # ---------------------------------------------------------------- session
 
-def milestone_entry(root: Path, mid: str) -> dict | None:
+def milestones(root: Path) -> list[dict]:
     try:
         data = json.loads((root / ".claude" / "milestones.json").read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return None
-    for m in data.get("milestones", []):
+        return [m for m in data.get("milestones", []) if isinstance(m, dict)]
+    except (OSError, ValueError, AttributeError):
+        return []
+
+
+def suite_id(mid: object) -> str:
+    return str(mid).lower().replace(".", "_")
+
+
+def milestone_entry(root: Path, mid: str) -> dict | None:
+    for m in milestones(root):
         if str(m.get("id", "")).lower() == mid.lower():
             return m
     return None
