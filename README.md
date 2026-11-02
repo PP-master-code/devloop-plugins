@@ -49,11 +49,33 @@ project owner planning milestones). The guard is a guard rail, not security: the
 Claude Code, git, Python 3.9+ (`python3`, `python` or `py`; standard library only). On Windows the hooks run in
 Git Bash, which Claude Code uses anyway. Without Python the hooks stay off and the commands still work.
 
+## gdscript-lint
+
+```
+/plugin install gdscript-lint@devloop
+pip install "gdtoolkit==4.*"
+```
+
+After every edit of a `.gd` file Claude makes, the hook runs `gdlint` on that file and hands findings on the lines
+the edit wrote straight back to Claude (old problems elsewhere stay quiet; parse errors always show). `/gdlint-init`
+sets up `gdlintrc` to fit an existing project. Settings in `.claude/gdscript-lint.json`:
+
+```json
+{"lint": true, "format": false, "godot_check": false}
+```
+
+`format` adds `gdformat --check` (whole file; off by default so files in another style are not reformatted),
+`godot_check` runs `$GODOT_BIN --headless --check-only -s <file>` (off by default: `class_name` and autoload
+references give false errors). `GDSCRIPT_LINT=0` turns the hook off. Without gdtoolkit the hook says so once per
+session and then stays quiet.
+
 ## Development
 
 ```
-python -m unittest -v tests.test_guard
+pip install "gdtoolkit==4.*"
+python -m unittest -v tests.test_guard tests.test_gdlint
 claude plugin validate plugins/devloop-hub
+claude plugin validate plugins/gdscript-lint
 ```
 
 Nothing in this repository may contain secrets, server addresses other than the hub's public URL, or names of

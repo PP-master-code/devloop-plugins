@@ -1,0 +1,9 @@
+{
+  "name": "gdscript-lint",
+  "version": "0.1.0",
+  "description": "Runs gdlint and gdformat --check (gdtoolkit 4) on every .gd file Claude edits and hands the findings back right away.",
+  "author": {"name": "PP-master-code", "url": "https://github.com/PP-master-code"},
+  "homepage": "https://github.com/PP-master-code/devloop-plugins",
+  "repository": "https://github.com/PP-master-code/devloop-plugins",
+  "keywords": ["godot", "gdscript", "lint", "gdtoolkit"]
+}
