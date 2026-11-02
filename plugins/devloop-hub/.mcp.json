@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "devloop": {
+      "type": "http",
+      "url": "https://hub.p2-software.de/mcp"
+    }
+  }
+}
