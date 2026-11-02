@@ -1,0 +1,11 @@
+{
+  "description": "gdlint and gdformat --check on every edited .gd file",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [{"type": "command", "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/run.sh\"", "timeout": 90}]
+      }
+    ]
+  }
+}

@@ -1,12 +1,24 @@
 {
   "name": "devloop",
-  "owner": {"name": "PP-master-code", "url": "https://github.com/PP-master-code"},
-  "metadata": {"description": "Plugins for working with the dev_loop hub (hub.p2-software.de)."},
+  "owner": {
+    "name": "PP-master-code",
+    "url": "https://github.com/PP-master-code"
+  },
+  "metadata": {
+    "description": "Plugins for working with the dev_loop hub (hub.p2-software.de)."
+  },
   "plugins": [
     {
       "name": "devloop-hub",
       "source": "./plugins/devloop-hub",
       "description": "Hub connection, /hub-* commands and guard hooks for dev_loop projects.",
+      "version": "0.1.0",
+      "category": "development"
+    },
+    {
+      "name": "gdscript-lint",
+      "source": "./plugins/gdscript-lint",
+      "description": "gdlint (and optionally gdformat --check) on every .gd file Claude edits; findings go straight back to Claude.",
       "version": "0.1.0",
       "category": "development"
     }
