@@ -19,3 +19,7 @@ With `--precheck` in "$ARGUMENTS": run the hub's checks only, do not merge.
    On rejection, fix and offer to submit again.
 7. After a merge or a review PR: estimate the tokens this session spent on the milestone and call `report_usage`
    (tell me the number you report).
+
+Pass the `session` key from `claim` (or from `/hub-start` in this conversation) to every hub call on the milestone.
+If the hub answers `session_required` (a new conversation) or `other_session`, stop and ask me whether another
+session still works on it; only if I confirm it stopped, call `claim` with `takeover=true` and use the new key.
