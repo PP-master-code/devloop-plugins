@@ -10,7 +10,10 @@ With `--precheck` in "$ARGUMENTS": run the hub's checks only, do not merge.
    and commit it if not.
 3. Run the milestone's checks from `.claude/milestones.json` locally where you can (commands with `{python}`,
    `{godot}` etc.: substitute what is installed here; skip only what cannot run here and say which). Fix failures
-   first.
+   first. Run the unit tests in full (every test file, not a selection): the hub checks fail-fast and a red unit
+   test hides every check behind it. When the milestone adds new content types (roles, events, sections, save
+   versions, unit kinds), grep the tests and check suites for counters and lists that change with them first; a
+   project list of such places belongs in its CLAUDE.md.
 4. Commit everything and push the branch (git remote or hub gateway). `.claude/milestones.json` must not be
    changed on the branch: submit refuses it.
 5. Hub tool `precheck` (with `--precheck`) or `submit`. If it answers `running`, wait about a minute and ask
