@@ -26,7 +26,12 @@ the score and keeps my rating.
    Subagents only read; they change no files.
 4. `think_tank_save(session, notes={role: note})` after round 1. Run round 2 when `round2_due` or depth `voll`, by
    continuing the same subagent(s), and save `notes={role: {"r2": note}}`.
-5. Write the conclusion as moderator with the hub's `score`, every point numbered and tagged with its role. Show it
-   to me. `think_tank_save(session, result, statements, mode)`.
+5. Write the conclusion as moderator with the hub's `score`, every point numbered and tagged with its role keys in
+   parentheses, e.g. `14. ... (techniker, spieldesigner)`, disputes and next steps too. Show it to me.
+   `think_tank_save(session, result, statements, mode)`; check `points` in the answer (the roles per point, kept
+   even with share rating) and add missing ones with `points={"6": ["skeptiker"]}`.
 6. Ask me one question: which points helped, and a rating 1-5. Save `rating`, `feedback` and `role_feedback` derived
    from the points I named.
+7. Later, when I adopt, adapt or reject a point, and when an adopted point worked or failed:
+   `think_tank_followup(session, point, status, note?, link?)`, and mark the origin in commits, status and issues as
+   `Think Tank #<session>/<point> (<role>)`. `think_tank_review(session=N)` lists the points still open.
