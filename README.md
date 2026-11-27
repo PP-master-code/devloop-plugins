@@ -27,7 +27,7 @@ Updates: `/plugin marketplace update devloop`.
 | `/hub-park` | Handoff, push, `release` (work stays as `<worker>/park/<id>`). |
 | `/hub-status [project]` | Notes, claims, reviews and the dev loops (`status`, `loops`). |
 | `/hub-usage` | Reports this session's tokens (`report_usage`). |
-| `/think-tank [panel] [voll] [getrennt] <idea>` | Opposing AI roles judge an idea (one subagent for all roles by default, on your own account), a moderator sums up with the hub's weighted score; result and your rating go to the hub (`think_tank`, `think_tank_save`). |
+| `/think-tank [panel] [voll] [getrennt] <idea>` | Opposing AI roles judge an idea (one subagent for all roles by default, on your own account), a moderator sums up with the hub's weighted score; result and your rating go to the hub (`think_tank`, `think_tank_save`). `personas:<set>` or `neue personas` runs your own persona sets (players, readers) with a knowledge level per task (`think_tank_personas`). |
 | Guard (PreToolUse) | In dev_loop projects (`.claude/milestones.json` present) blocks: edits to `tests/acceptance/`, loop scripts (`run-loop.ps1`, `check-runner.ps1`, `loop-supervisor.ps1`, `install-autostart.ps1`, `loop-config.psd1`, `tools/selfcheck.ps1`), `STOP` and `.claude/milestones.json`; new `skip`/`xfail` markers in tests; `git stash`/`reset --hard`/`checkout .` while `milestones.json` has uncommitted changes; pushes to `main`/`master`. |
 | SessionStart | On a work branch: loads the milestone, its handoff and `.claude/last_failure.md` into the session. |
 | Stop | On a work branch: asks once to update the handoff when files changed after it was last written. |
